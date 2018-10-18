@@ -88,13 +88,16 @@ const { Provider, Consumer, withConsumer } = createReactSmartContext({
 
 // in use
 <Provider>
+    ...
     <Consumer>
         {(context) => {
             <div>
                 <button onClick={() => context.setColor('red')}>set red</button>
-                <button onClick={() => context.setColorAsynchronous()}>fetch color from server</button>
+                <button onClick={context.setColorAsynchronous}>fetch color from server</button>
             </div>
         }}
+    </Consumer>
+    ...
 </Provider>
 ```
 
