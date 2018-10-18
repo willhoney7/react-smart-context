@@ -4,9 +4,9 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls] -->
 
-ReactSmartContext is a lightweight library used for creating smarter [Context](https://reactjs.org/docs/context.html) Providers. Pass in an object of the `initialState` and any methods you want and you'll receive an object of a `Provider` component, `Consumer` component, and `withConsumer` [HOC](https://reactjs.org/docs/higher-order-components.html). This library helps you use React Context in an efficient way with less code. See below for details.
+ReactSmartContext is a lightweight library that helps you use React Context efficiently and with less boilerplate code. Pass in an object of the `initialState` and any methods you want and you'll receive an object of a `Provider` component, `Consumer` component, and `withConsumer` [HOC](https://reactjs.org/docs/higher-order-components.html). See below for details.
 
-For more information on why this is important, see [this article by Ryan Florence](https://medium.com/@ryanflorence/react-context-and-re-renders-react-take-the-wheel-cd1d20663647.)
+For more information on why this is important, see [this article by Ryan Florence](https://medium.com/@ryanflorence/react-context-and-re-renders-react-take-the-wheel-cd1d20663647).
 
 Before
 
@@ -42,7 +42,7 @@ const { Provider, Consumer, withConsumer } = createSmartReactContext({
     initialState: { color: 'orange' },
     setColor: (color) => ({ color }),
 });
-export { Proivder, Consumer, withConsumer };
+export { Provider, Consumer, withConsumer };
 ```
 
 <!-- [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
