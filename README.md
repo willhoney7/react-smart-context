@@ -18,7 +18,7 @@ class ProviderWrapper extends React.Component {
     }
     state = {
         color: 'orange',
-        setColor: this.setColor // yes the function could go directly in the state declaration, however I think this approach gets unruly fast.
+        setColor: this.setColor // yes the function could go directly in the state declaration, however this approach gets unruly fast.
     }
     render() {
         return (
@@ -26,6 +26,7 @@ class ProviderWrapper extends React.Component {
         );
     }
 }
+
 
 const withProvider = (WrappedComponent, providerName = 'provider') => (props) => (
     <Consumer>
@@ -41,9 +42,7 @@ After
 ```js
 const { Store, Consumer, withStore } = createReactContextStore({
     initialState: { color: 'orange' },
-    setColor(color) {
-        this.setState({ color });
-    },
+    setColor: (color) => ({ color }),
 });
 export { Store, Consumer, withStore };
 ```

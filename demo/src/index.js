@@ -5,9 +5,7 @@ import createReactContextStore from '../../src';
 
 const { Store, Consumer, withStore } = createReactContextStore({
     initialState: { color: 'orange' },
-    setColor(color) {
-        this.setState({ color });
-    },
+    setColor: (color) => ({ color }),
 });
 
 class Demo extends Component {

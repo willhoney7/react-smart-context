@@ -13,7 +13,8 @@ export default function createReactContextStore(store) {
             super();
 
             Object.keys(methods).forEach(
-                (methodName) => (this[methodName] = methods[methodName].bind(this))
+                (methodName) =>
+                    (this[methodName] = (...args) => this.setState(methods[methodName](...args)))
             );
 
             this.state = Object.keys(methods).reduce(
