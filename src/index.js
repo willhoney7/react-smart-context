@@ -4,11 +4,11 @@ const ThrowError = () => {
     throw new Error('Attempted to use Consumer without a Store');
 };
 
-export default function createReactContextStore(store) {
-    const { initialState = {}, ...methods } = store;
+export default function createReactSmartContext(initialization) {
+    const { initialState = {}, ...methods } = initialization;
     const { Provider, Consumer } = React.createContext();
 
-    class ContextStore extends React.PureComponent {
+    class SmartProvider extends React.PureComponent {
         constructor() {
             super();
 
@@ -38,11 +38,11 @@ export default function createReactContextStore(store) {
         <Consumer>{(store) => (store ? children(store) : <ThrowError />)}</Consumer>
     );
 
-    const withStore = (WrappedComponent, storeName = 'store') => (props) => (
+    const withConsumer = (WrappedComponent, storeName = 'store') => (props) => (
         <GuardedConsumer>
             {(store) => <WrappedComponent {...{ [storeName]: store }} {...props} />}
         </GuardedConsumer>
     );
 
-    return { Store: ContextStore, Consumer: GuardedConsumer, withStore };
+    return { Provider: SmartProvider, Consumer: GuardedConsumer, withConsumer };
 }

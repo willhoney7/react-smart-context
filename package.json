@@ -1,7 +1,7 @@
 {
-    "name": "react-context-store",
+    "name": "react-smart-context",
     "version": "0.1.0",
-    "description": "react-context-store React component",
+    "description": "react-smart-context",
     "main": "lib/index.js",
     "module": "es/index.js",
     "files": [

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import createReactContextStore from '../../src';
+import createReactSmartContext from '../../src';
 
-const { Store, Consumer, withStore } = createReactContextStore({
+const { Provider, Consumer, withConsumer } = createReactSmartContext({
     initialState: { color: 'orange' },
     setColor: (color) => ({ color }),
 });
@@ -12,12 +12,13 @@ class Demo extends Component {
     render() {
         return (
             <React.Fragment>
-                <Store>
+                <Provider>
                     <div>
-                        <h1>react-context-store Demo</h1>
+                        <h1>react-smart-context Demo</h1>
                         <Consumer>
                             {(store) => (
                                 <div>
+                                    <h2>Consumer 1</h2>
                                     Color: {store.color}
                                     <button onClick={() => store.setColor('purple')}>Purple</button>
                                     <button onClick={() => store.setColor('green')}>Green</button>
@@ -27,15 +28,16 @@ class Demo extends Component {
 
                         <Consumer>
                             {(store) => (
-                                <div style={{ color: store.color }}>
-                                    Another Consumer
+                                <div>
+                                    <h2>Consumer 2</h2>
+                                    Color: {store.color}
                                     <button onClick={() => store.setColor('purple')}>Purple</button>
                                     <button onClick={() => store.setColor('green')}>Green</button>
                                 </div>
                             )}
                         </Consumer>
                     </div>
-                </Store>
+                </Provider>
 
                 {/* <Consumer>
                     {(store) => (
