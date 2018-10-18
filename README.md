@@ -1,8 +1,10 @@
 # react-context-store
 
-<!-- [![Travis][build-badge]][build]
+<!-- [![Travis][build-badge]][build] -->
+
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls] -->
+
+<!-- [![Coveralls][coveralls-badge]][coveralls] -->
 
 ReactSmartContext is a lightweight library that helps you use React Context efficiently and with less boilerplate code. Pass in an object of the `initialState` and any methods you want and you'll receive an object of a `Provider` component, `Consumer` component, and `withConsumer` [HOC](https://reactjs.org/docs/higher-order-components.html). See below for details.
 
@@ -43,6 +45,57 @@ const { Provider, Consumer, withConsumer } = createSmartReactContext({
     setColor: (color) => ({ color }),
 });
 export { Provider, Consumer, withConsumer };
+```
+
+# Examples
+
+A more detailed example:
+
+```js
+const { Provider, Consumer, withConsumer } = createReactSmartContext({
+    initialState: { color: 'orange' },
+    // shorthand
+    setColor: (color) => ({ color }),
+    // shorthand with previous state
+    setColorWithPreviousState: (color) => (prevState) => ({ color, previousColor: prevState.color }),
+    // setState using asynchronous data (notice that it's NOT an arrow function)
+    setColorAsynchronous() {
+        this.setState({ loading: true })
+        getColorFromServer().then(color => {
+            this.setState({ color, loading: false })
+        })
+    },
+    // set color once it's saved in database
+    setColorOnceSaved(color) {
+        this.setState({ loading: true })
+        updateColorInDatabase(color).then(color => {
+            this.setState({ color });
+        });
+    },
+    // set color in database optimistically
+    setColorOptimistically(color) {
+        const previousColor = this.state.color;
+        this.setState({ color }); // set it immediately
+        updateColorInDatabase(color).catch(er => { // rollback on fail
+            this.setState({ color: previousColor });
+        });
+    }
+    // you can use methods in other methods
+    setColorViaOtherMethod(color) {
+        this.setColor(color); // or this.state.setColor(color);
+    }
+});
+
+// in use
+<Provider>
+    <Consumer>
+        {(context) => {
+            <div>
+                <button onClick={() => context.setColor('red')}>set red</button>
+                <button onClick={() => context.setColorAsynchronous()}>fetch color from server</button>
+            </div>
+        }}
+</Provider>
 ```
 
 <!-- [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square

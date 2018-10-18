@@ -6,6 +6,13 @@ import createReactSmartContext from '../../src';
 const { Provider, Consumer, withConsumer } = createReactSmartContext({
     initialState: { color: 'orange' },
     setColor: (color) => ({ color }),
+    setColorWithPreviousState: (color) => (state) => ({ color }),
+    setColorAsync(color) {
+        setTimeout(() => {
+            this.setState({ color });
+        }, 200);
+        this.setColor('orange'); // or this.state.setColor()
+    },
 });
 
 class Demo extends Component {
@@ -22,6 +29,9 @@ class Demo extends Component {
                                     Color: {store.color}
                                     <button onClick={() => store.setColor('purple')}>Purple</button>
                                     <button onClick={() => store.setColor('green')}>Green</button>
+                                    <button onClick={() => store.setColorAsync('yellow')}>
+                                        orange then yellow
+                                    </button>
                                 </div>
                             )}
                         </Consumer>

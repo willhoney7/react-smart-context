@@ -9,26 +9,20 @@ export default function createReactSmartContext(initialization) {
     const { Provider, Consumer } = React.createContext();
 
     class SmartProvider extends React.PureComponent {
-        constructor() {
-            super();
-
-            Object.keys(methods).forEach(
-                (methodName) =>
-                    (this[methodName] = (...args) => this.setState(methods[methodName](...args)))
-            );
-
-            this.state = Object.keys(methods).reduce(
-                (state, methodName) => {
-                    if (state[methodName]) {
-                        throw new Error(`Duplicate state key and method name: ${methodName}`);
-                    } else {
-                        state[methodName] = this[methodName];
-                    }
-                    return state;
-                },
-                { ...initialState }
-            );
-        }
+        state = Object.keys(methods).reduce(
+            (state, methodName) => {
+                if (state[methodName] !== undefined) {
+                    throw new Error(`Duplicate state key and method name: ${methodName}`);
+                } else {
+                    state[methodName] = this[methodName] = (...args) => {
+                        const result = methods[methodName].apply(this, args);
+                        if (result !== undefined) this.setState(result);
+                    };
+                }
+                return state;
+            },
+            { ...initialState }
+        );
         render() {
             return <Provider value={this.state}>{this.props.children}</Provider>;
         }
@@ -38,9 +32,9 @@ export default function createReactSmartContext(initialization) {
         <Consumer>{(store) => (store ? children(store) : <ThrowError />)}</Consumer>
     );
 
-    const withConsumer = (WrappedComponent, storeName = 'store') => (props) => (
+    const withConsumer = (WrappedComponent, propName = 'context') => (props) => (
         <GuardedConsumer>
-            {(store) => <WrappedComponent {...{ [storeName]: store }} {...props} />}
+            {(context) => <WrappedComponent {...{ [propName]: context }} {...props} />}
         </GuardedConsumer>
     );
 
