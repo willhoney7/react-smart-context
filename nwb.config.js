@@ -9,4 +9,20 @@ module.exports = {
             },
         },
     },
+    webpack: {
+        config(config) {
+            config.entry = {
+                demo: ['./demo/src/index.js'],
+            };
+
+            config.resolve.extensions = config.resolve.extensions || [];
+            config.resolve.extensions.push('.js', '.ts', '.tsx', '.css');
+            config.module.rules.push({
+                test: /\.tsx?$/,
+                loader: 'awesome-typescript-loader',
+            });
+
+            return config;
+        },
+    },
 };
