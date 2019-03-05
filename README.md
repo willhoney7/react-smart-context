@@ -1,11 +1,5 @@
 # react-context-store
 
-<!-- [![Travis][build-badge]][build] -->
-
-[![npm package][npm-badge]][npm]
-
-<!-- [![Coveralls][coveralls-badge]][coveralls] -->
-
 ReactSmartContext is a lightweight library that helps you use React Context efficiently and with less boilerplate code. Pass in an object of the `initialState` and any methods you want and you'll receive an object of a `Provider` component, `Consumer` component, and `withConsumer` [HOC](https://reactjs.org/docs/higher-order-components.html). See below for details.
 
 For more information on why this is important, see [this article by Ryan Florence](https://medium.com/@ryanflorence/react-context-and-re-renders-react-take-the-wheel-cd1d20663647).
